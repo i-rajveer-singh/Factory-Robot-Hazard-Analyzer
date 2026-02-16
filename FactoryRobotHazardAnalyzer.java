@@ -10,19 +10,20 @@ public class FactoryRobotHazardAnalyzer {
         int workerDensity = sc.nextInt();
         String machineryState = sc.next();
 
-        double risk = calculateHazardRisk(armPrecision,workerDensity,machineryState);
+        try{
+            double risk = calculateHazardRisk(armPrecision,workerDensity,machineryState);
+            System.out.println("Robot Hazard Risk Score: " + risk);
+        } catch(RobotSafetyException e){
+        }
 
-        System.out.println("Robot Hazard Risk Score: " + risk);
     }
 
-    // =========================
-    // UC5 NEW METHOD
-    // =========================
-    public static double calculateHazardRisk(double armPrecision,int workerDensity,String machineryState){
 
+    // UC5
+    public static double calculateHazardRisk(double armPrecision,int workerDensity,String machineryState) throws RobotSafetyException
+    {
         if(armPrecision < 0.0 || armPrecision > 1.0){
-            System.out.println("Invalid arm precision");
-            return 0;
+            throw new RobotSafetyException("Error: Arm precision must be 0.0-1.0");
         }
 
         if(workerDensity < 1 || workerDensity > 20){
